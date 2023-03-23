@@ -1,9 +1,12 @@
 import CartWidget from "../CartWidget/CartWidget"
+import Container from 'react-bootstrap/Container';
 
 function NavBar() {
 
     return (
-        <div className={`navBar`}>
+
+        <Container className={`navBar`}>
+        
 
             <div><h1>GamingHouse</h1></div>
 
@@ -20,7 +23,8 @@ function NavBar() {
                 <CartWidget />
             </div>
 
-        </div>
+       
+        </Container> 
     )
 }
 

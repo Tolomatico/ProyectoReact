@@ -11,16 +11,16 @@ function App() {
     <>
        <NavBar />
 
-      <ItemContainerList  titulo={`gaminghouse`} />
+      <ItemContainerList  titulo={`gaminghouse`} subtitulo={`productos`} ayudapls={`como subo a github pages el proyecto`} />
 
  
    
-        <div>
+        <>
 
           <button onClick={() => setCarrito((carrito) => carrito + 1)}>
             Agregar al carrito  {carrito}
           </button>
-        </div>  
+        </>  
  
       
 

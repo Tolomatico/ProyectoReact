@@ -1,7 +1,5 @@
-const ItemContainerList = (props) => {
+const ItemListContainer = ({titulo,subtitulo,ayudapls}) => {
 
-    const {titulo,subtitulo,ayudapls}=props
-   
     return (
         <>
 
@@ -12,5 +10,5 @@ const ItemContainerList = (props) => {
     )
 }
 
-export default ItemContainerList
+export default ItemListContainer
 

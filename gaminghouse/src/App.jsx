@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import ItemContainerList from './componentes/ItemContainerList/ItemContainerList'
+import ItemListContainer from './componentes/ItemListContainer/ItemListContainer'
 import NavBar from './componentes/NavBar/NavBar'
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <>
        <NavBar />
 
-      <ItemContainerList  titulo={`gaminghouse`} subtitulo={`productos`} ayudapls={`como subo a github pages el proyecto`} />
+      <ItemListContainer  titulo={`gaminghouse`} subtitulo={`productos`} ayudapls={`como subo a github pages el proyecto`} />
 
  
    

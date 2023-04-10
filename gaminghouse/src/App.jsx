@@ -1,31 +1,33 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
+import { ItemDetailContainer } from './componentes/ItemDetailContainer/ItemDetailContainer'
 import ItemListContainer from './componentes/ItemListContainer/ItemListContainer'
 import NavBar from './componentes/NavBar/NavBar'
 
 function App() {
-  const [carrito, setCarrito] = useState(0)
+
 
   return (
 
-    <>
-       <NavBar />
 
-      <ItemListContainer  titulo={`gaminghouse`} subtitulo={`productos`} ayudapls={`como subo a github pages el proyecto`} />
+    <BrowserRouter>
+      <>
+        <NavBar />
 
- 
-   
-        <>
+        <Routes>
+          <Route path="/" element={<ItemListContainer titulo={`gaminghouse`} />} />
+          <Route path="/detail" element={<ItemDetailContainer />} />
+          <Route path="*" element={<Navigate to="/"/> } />
 
-          <button onClick={() => setCarrito((carrito) => carrito + 1)}>
-            Agregar al carrito  {carrito}
-          </button>
-        </>  
- 
+
+        </Routes>
+
       
+      </>
 
-</>
+    </BrowserRouter>
   )
 }
 
 export default App
+

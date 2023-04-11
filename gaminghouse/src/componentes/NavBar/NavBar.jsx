@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CartWidget from "../CartWidget/CartWidget"
 import Container from 'react-bootstrap/Container';
 
@@ -8,19 +9,19 @@ function NavBar() {
         <Container className={`navBar`}>
         
 
-            <div><h1>GamingHouse</h1></div>
+            <div><h1><Link to="/">GamingHouse</Link></h1></div>
 
             <div> <input className={`barraBusqueda`} type="search" placeholder="Buscar producto" />
             </div>
             <ul>
-            <li>  <a href=""> Placas de video</a></li>
-            <li>  <a href="">Procesadores</a></li>
-            <li>  <a href="">Memorias Ram</a></li>
-            <li>  <a href="">Mothers</a></li>
+            <li>  <Link to="/categoria/placasdevideo"> Placas de video</Link></li>
+            <li>  <Link to="/categoria/procesadores">Procesadores</Link></li>
+            <li>  <Link to="/categoria/memoriasram">Memorias Ram</Link></li>
+            <li>  <Link to="/categoria/mothers">Mothers</Link></li>
             </ul>
 
             <div>
-                <CartWidget />
+                  <Link to="/cart"><CartWidget /> </Link>
             </div>
 
        

@@ -16,7 +16,8 @@ function App() {
 
         <Routes>
           <Route path="/" element={<ItemListContainer titulo={`gaminghouse`} />} />
-          <Route path="/detail" element={<ItemDetailContainer />} />
+          <Route path="/categoria/:categoriaid" element={<ItemListContainer titulo={`gaminghouse`} />} />
+          <Route path="/detail/:productoid" element={<ItemDetailContainer />} />
           <Route path="*" element={<Navigate to="/"/> } />
 
 

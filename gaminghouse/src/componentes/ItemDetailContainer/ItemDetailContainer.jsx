@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { ItemDetalle } from '../ItemDetalle/ItemDetalle'
 import mockFeth from '../../Utils/mockFeth'
+import { useParams } from 'react-router-dom'
 
 export const ItemDetailContainer = () => {
 
 const [producto,setProducto]=useState({})
 
+const {productoid}= useParams()
+
   useEffect(()=>{
 
-    mockFeth(`1`)
+    mockFeth(productoid)
     .then(resp=>setProducto(resp))
     .catch((err)=>console.log(err))
 

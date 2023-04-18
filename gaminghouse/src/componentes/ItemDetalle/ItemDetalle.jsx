@@ -1,14 +1,19 @@
+import { useCartContext } from "../../context/CartContext"
 import { ItemCount } from "../ItemCount/ItemCount"
+
 
 
 export const ItemDetalle = ({ producto }) => {
 
-  const onAdd = (cantidad) => {
+    const { agregarAlCart , cartList} = useCartContext()
 
-    console.log(cantidad)
+   const onAdd = (cantidad) => {
 
-  }
+    console.log(cantidad )
 
+  //  agregarAlCart({producto})
+
+ }
 
   return (
 
@@ -19,6 +24,8 @@ export const ItemDetalle = ({ producto }) => {
       <p>{producto.stock}</p>
 
       <ItemCount initial={1} stock={producto.stock} onAdd={onAdd} />
+
+
 
     </div>
   )

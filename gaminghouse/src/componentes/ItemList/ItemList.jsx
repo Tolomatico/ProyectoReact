@@ -4,6 +4,7 @@ export const ItemList = ({ productos }) => {
 
     return (
 
-        productos.map(producto => <Item producto={producto}/>
-        ))
+     productos.map((producto) => <Item key={producto.id}  producto={producto} />)
+
+        )
 }

@@ -1,46 +1,16 @@
-import {  useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { ItemList } from "../ItemList/ItemList"
 import { useParams } from "react-router-dom"
 import { Loading } from "../Loading/Loading"
 import { collection, getDoc, getFirestore, doc, getDocs, query, where, } from "firebase/firestore"
 import { Filter } from "../Filter/Filter"
 
-const ItemListContainer = ({ titulo }) => {
+const ItemListContainer = () => {
     const [productos, setProductos] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const { categoriaid } = useParams()
+    const [filtroPrecio, setFiltroPrecio] = useState("")
 
-
-    // console.log(categoriaid)
-
-    // useEffect(() => {
-
-    //     if (categoriaid) {
-
-    //         mockFeth()
-    //             .then(resp => setProductos(resp.filter(prod => prod.categoria === categoriaid)))
-    //             .catch(err => console.log(err))
-    //             .finally(() => console.log("al final"))
-
-
-    //     }
-    //     else {
-    //         mockFeth()
-    //             .then(resp => setProductos(resp))
-    //             .catch(err => console.log(err))
-    //             .finally(() => setIsLoading(false))
-    //     }
-
-    // }, [categoriaid])
-
-
-    // useEffect(() => {
-
-    //     const db = getFirestore()
-    //     const queryDoc = doc(db, "productos", "7W8c1cQs7SZVEap2joy4")
-    //     getDoc(queryDoc)
-    //     .then(resp=>console.log({id:resp.id,...resp.data()}))
-    //  }, [])
 
 
 
@@ -67,6 +37,20 @@ const ItemListContainer = ({ titulo }) => {
     }, [categoriaid])
 
 
+    const handleFiltroPrecio = () => {
+
+        if (filtroPrecio === "menorPrecio") {
+            return [...productos].sort((a, b) => a.precio - b.precio)
+
+        } else if (filtroPrecio === "mayorPrecio") {
+            return [...productos].sort((a, b) => b.precio - a.precio)
+
+        } else {
+            return productos
+        }
+    }
+
+
     const handleProductosFiltrados = ({ filterState, filterOnChange }) => {
 
         return (
@@ -76,11 +60,20 @@ const ItemListContainer = ({ titulo }) => {
                     <h3 className="buscador">Buscar producto</h3>
 
                     <input className="input_buscador" type="text" value={filterState} onChange={filterOnChange} placeholder="Nombre del producto..." />
+
+                    <select className="select_filtro" value={filtroPrecio} onChange={(e) => setFiltroPrecio(e.target.value)}>
+                    <option value="">Ordenar por precio</option>
+                    <option value="menorPrecio">Menor precio</option>
+                    <option value="mayorPrecio">Mayor precio</option>
+                </select>
                 </div>
+
+               
+
                 <div className="listcard_container">
                     <ItemList
 
-                        productos={filterState === "" ? productos : productos.filter(producto => producto.nombre.toLowerCase().includes(filterState))
+                        productos={filterState === "" ? handleFiltroPrecio() : handleFiltroPrecio().filter(producto => producto.nombre.toLowerCase().includes(filterState))
 
                         }
                     />
@@ -101,6 +94,7 @@ const ItemListContainer = ({ titulo }) => {
                 :
 
                 <Filter className="listcard_container">
+
 
                     {handleProductosFiltrados}
 

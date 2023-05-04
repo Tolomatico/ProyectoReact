@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 export const ItemDetalle = ({ producto }) => {
 
   const [conCantidad, setConCantidad] = useState(false)
-  const { agregarAlCart} = useCartContext()
+  const { agregarAlCart } = useCartContext()
 
   const onAdd = (cantidad) => {
     agregarAlCart({ ...producto, cantidad })
@@ -17,19 +17,21 @@ export const ItemDetalle = ({ producto }) => {
 
   return (
 
-    <div className="div_detail">
-      <img src={producto.imagen} className="imagen" alt="imagen" />
-      <h3>{producto.nombre}</h3>
-      <p>${producto.precio}</p>
-      <p>{producto.stock}u.</p>
+    <div className="div_detail ">
 
-      <div>
+      <div className="card_carrito" >
+        <img src={producto.imagen} alt="imagen" className="imagen card_img" />
+        <div className="div_info" >
+          <h3>Producto:{producto.nombre}</h3>
+          <p>Precio:${producto.precio}</p>
+          <p>Unidades:{producto.stock}</p>
+        </div>
         {conCantidad ?
 
-          <>
+          <div className='div_itemcount'>
             <Link to="/"> <button>Seguir comprando</button> </Link>
             <Link to="/cart"> <button>Ir al carrito</button></Link>
-          </>
+          </div>
           :
           <ItemCount initial={1} stock={producto.stock} onAdd={onAdd} />
         }

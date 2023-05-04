@@ -135,6 +135,7 @@ a:hover {
 .div_buscador {
   text-align: center;
   padding-top: 20px;
+  font-size: 1.5rem;
 
 }
 
@@ -145,6 +146,35 @@ a:hover {
 .input_buscador{
 border-radius: 10px;
 padding: 5px;
+}
 
+.select_filtro{
+  margin: 10px;
+  padding: 5px;
+  border-radius: 10px;
 
 }
+
+.div_itemcount{
+display: flex;
+text-align: center;
+align-items: center;
+}
+
+button{
+  padding: 3px;
+  background-color: white;
+  border-radius: 10px ;
+  padding: 5px;
+
+}
+
+button:hover{
+  background-color: rgb(0, 119, 255);
+  color: white;
+}
+
+
+
+
+

@@ -5,15 +5,16 @@
 }
 
 
-.navBar{
-background-color: rgb(0, 119, 255);
+.navBar {
+  background-color: rgb(0, 119, 255);
+  color: black;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   border-bottom: 30px;
   height: 15%;
-}
 
+}
 
 ul {
   text-decoration: none;
@@ -23,41 +24,127 @@ ul {
 
 }
 
-ul li{list-style: none;
+ul li {
+  list-style: none;
   text-decoration: none;
   font-size: 1.5rem;
+  color: black;
 }
 
-h1{
+
+
+h1 {
   font-size: 3rem;
 }
 
-svg{
-width: 30px;
-
-}
-.carrito{
+svg {
   width: 30px;
- 
+
 }
 
-a{
+.carrito {
+  width: 30px;
+
+}
+
+a {
   text-decoration: none;
-}
-
-a:hover{
-
-  color:white
-
+  color: black;
 
 }
 
-.barraBusqueda{
-  width: 200px;
-  height: 30px;
-  border-radius: 10px;
+a:hover {
+
+  color: white
 }
 
-.title{text-align: center;justify-content: center;font-size: 3rem;} 
 
-.imagen{width: 150px;}
+.title {
+  text-align: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.imagen {
+  width: 150px;
+  height: 130px;
+}
+
+.listcard_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px;
+
+}
+
+.card_carrito {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  padding: 5px;
+  width: 500px;
+
+
+}
+
+.card_imag {
+  width: 150px;
+  height: 130px;
+
+
+}
+
+.div_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.div_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}
+
+.card_item {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 5px;
+  width: 150px;
+  height: fit-content;
+
+}
+
+.div_cart {
+  padding: 20px;
+}
+
+.div_detail {
+  padding: 20px;
+}
+
+.div_buscador {
+  text-align: center;
+  padding-top: 20px;
+
+}
+
+.buscador{
+ margin: 5px;
+
+}
+.input_buscador{
+border-radius: 10px;
+padding: 5px;
+
+
+}

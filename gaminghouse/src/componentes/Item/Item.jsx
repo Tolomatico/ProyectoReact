@@ -1,22 +1,24 @@
+import { memo } from "react"
 import { Link } from "react-router-dom"
 
 
-export const Item = ({ producto }) => {
+export const Item = memo(({ producto }) => {
 
     return (
 
-        <div key={producto.id}>  <div >
+        <div key={producto.id} className="card_item">
+
+
 
             <img className={"imagen"} src={producto.imagen} alt="imagen" />
 
-            <p>{producto.nombre}</p>
-            <p>{producto.precio}</p>
-            <p>{producto.stock}</p>
-           <Link to={`/detail/${producto.id}`}><button>Detalle</button></Link> 
-
+           
+                <h3>{producto.nombre}</h3>
+                <p>${producto.precio}</p>
+                <p>{producto.stock}u.</p>
+                <Link to={`/detail/${producto.id}`}><button>Detalle</button></Link>
+            
         </div>
-        </div>
-
 
     )
-}
+})

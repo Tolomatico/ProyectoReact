@@ -2,24 +2,35 @@ import React, { useEffect, useState } from 'react'
 import { ItemDetalle } from '../ItemDetalle/ItemDetalle'
 import mockFeth from '../../Utils/mockFeth'
 import { useParams } from 'react-router-dom'
+import { doc, getDoc, getFirestore } from 'firebase/firestore'
 
 export const ItemDetailContainer = () => {
 
-const [producto,setProducto]=useState({})
+  const [producto, setProducto] = useState({})
 
-const {productoid}= useParams()
+  const { productoid } = useParams()
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    mockFeth(productoid)
-    .then(resp=>setProducto(resp))
-    .catch((err)=>console.log(err))
+    const db = getFirestore()
 
-  },[])
+    const queryDoc = doc(db, "productos",productoid)
+
+    getDoc(queryDoc)
+      .then(resp => setProducto({ id: resp.id, ...resp.data() }))
+  }, [])
+
+  //  useEffect(()=>{
+
+  //  mockFeth(productoid)
+  //    .then(resp=>setProducto(resp))
+  //   .catch((err)=>console.log(err))
+
+  //  },[])
 
   return (
 
-   <ItemDetalle  producto={producto}/>
+    <ItemDetalle producto={producto} />
   )
 }
 

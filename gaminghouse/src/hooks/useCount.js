@@ -4,6 +4,7 @@ export const useCount = (initial = 0, max = 5, min = 1) => {
 
     if (initial < min || initial > max) initial = min
 
+  
     const [contador, setContador] = useState(initial)
 
     const increment = () => {
@@ -18,12 +19,10 @@ export const useCount = (initial = 0, max = 5, min = 1) => {
             setContador(contador - 1)
     }
 
-    const agregarAlCarrito = () => {
+    
 
-        setContador(initial)
-    }
 
-    return { contador, increment, decrement, agregarAlCarrito }
+    return { contador, increment, decrement}
 
 
 }

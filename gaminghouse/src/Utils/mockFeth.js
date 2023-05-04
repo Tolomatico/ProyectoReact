@@ -11,7 +11,7 @@ let mockFeth = (id) => {
     return new Promise((resolve, reject) => {
 
         setTimeout(() => {
-             resolve(id ? productos.find(prod=>prod.id === id): productos) }, 1000)
+             resolve(id ? productos.find(prod=>prod.id === id): productos) }, 2000)
     })
 }
 

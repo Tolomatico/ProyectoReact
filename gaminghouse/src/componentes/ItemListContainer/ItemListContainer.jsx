@@ -1,71 +1,116 @@
-import { useEffect, useState } from "react"
-import mockFeth from "../../Utils/mockFeth"
+import { memo, useEffect, useState } from "react"
+
 import { ItemList } from "../ItemList/ItemList"
 import { useParams } from "react-router-dom"
-
-
+import { Loading } from "../Loading/Loading"
+import { collection, getDoc, getFirestore, doc, getDocs, query, where, } from "firebase/firestore"
+import { Filter } from "../Filter/Filter"
 
 const ItemListContainer = ({ titulo }) => {
     const [productos, setProductos] = useState([])
-
+    const [isLoading, setIsLoading] = useState(true)
     const { categoriaid } = useParams()
 
-    console.log(categoriaid)
+
+    // console.log(categoriaid)
+
+    // useEffect(() => {
+
+    //     if (categoriaid) {
+
+    //         mockFeth()
+    //             .then(resp => setProductos(resp.filter(prod => prod.categoria === categoriaid)))
+    //             .catch(err => console.log(err))
+    //             .finally(() => console.log("al final"))
+
+
+    //     }
+    //     else {
+    //         mockFeth()
+    //             .then(resp => setProductos(resp))
+    //             .catch(err => console.log(err))
+    //             .finally(() => setIsLoading(false))
+    //     }
+
+    // }, [categoriaid])
+
+
+    // useEffect(() => {
+
+    //     const db = getFirestore()
+    //     const queryDoc = doc(db, "productos", "7W8c1cQs7SZVEap2joy4")
+    //     getDoc(queryDoc)
+    //     .then(resp=>console.log({id:resp.id,...resp.data()}))
+    //  }, [])
+
+
 
     useEffect(() => {
 
+        const db = getFirestore()
+        const queryCollection = collection(db, "productos")
+
         if (categoriaid) {
 
-            mockFeth()
-                .then(resp => setProductos(resp.filter(prod=>prod.categoria === categoriaid)))
+            const queryFilter = query(queryCollection, where("categoria", "==", categoriaid))
+            getDocs(queryFilter)
+                .then(resp => setProductos(resp.docs.map(producto => ({ id: producto.id, ...producto.data() }))))
                 .catch(err => console.log(err))
-                .finally(() => console.log("al final"))
-
-
+                .finally(() => setIsLoading(false))
         }
         else {
-            mockFeth()
-                .then(resp => setProductos(resp))
-                .catch(err => console.log(err))
-                .finally(() => console.log("al final"))
-        }
 
+            getDocs(queryCollection)
+                .then(resp => setProductos(resp.docs.map(producto => ({ id: producto.id, ...producto.data() }))))
+                .catch(err => console.log(err))
+                .finally(() => setIsLoading(false))
+        }
     }, [categoriaid])
 
-    console.log(productos)
+
+    const handleProductosFiltrados = ({ filterState, filterOnChange }) => {
+
+        return (
+
+            <>
+                <div className="div_buscador">
+                    <h3 className="buscador">Buscar producto</h3>
+
+                    <input className="input_buscador" type="text" value={filterState} onChange={filterOnChange} placeholder="Nombre del producto..." />
+                </div>
+                <div className="listcard_container">
+                    <ItemList
+
+                        productos={filterState === "" ? productos : productos.filter(producto => producto.nombre.toLowerCase().includes(filterState))
+
+                        }
+                    />
+                </div>
+            </>
+
+        )
+    }
+
 
     return (
-        <>
-
-            <h3 className={`title`}>Bienvenidos a {titulo}</h3>
+        <div >
 
 
+            {isLoading ?
 
-            <div style={{
+                <Loading />
+                :
 
-                display: `flex`,
-                flexDirection: "row",
-                flexWrap: `wrap`,
-                gap: `20px`,
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center"
-            }}>
+                <Filter className="listcard_container">
 
-                {productos.length !== 0 ?
+                    {handleProductosFiltrados}
 
-                    <ItemList productos={productos} />
+                </Filter>
+            }
 
 
-
-                    : <h2>Cargando... </h2>
-
-                }
-            </div>
-
-        </>
+        </div>
     )
 }
 
 export default ItemListContainer
-

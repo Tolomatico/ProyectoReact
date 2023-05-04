@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ItemDetalle } from '../ItemDetalle/ItemDetalle'
-import mockFeth from '../../Utils/mockFeth'
+
 import { useParams } from 'react-router-dom'
 import { doc, getDoc, getFirestore } from 'firebase/firestore'
 

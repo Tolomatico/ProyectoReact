@@ -1,5 +1,4 @@
-import { memo, useEffect, useState } from "react"
-
+import {  useEffect, useState } from "react"
 import { ItemList } from "../ItemList/ItemList"
 import { useParams } from "react-router-dom"
 import { Loading } from "../Loading/Loading"

@@ -61,8 +61,8 @@ const ItemListContainer = () => {
 
                     <input className="input_buscador" type="text" value={filterState} onChange={filterOnChange} placeholder="Nombre del producto..." />
 
-                    <select className="select_filtro" value={filtroPrecio} onChange={(e) => setFiltroPrecio(e.target.value)}>
-                    <option value="">Ordenar por precio</option>
+                    <select className="select_filtro" value={filtroPrecio} onChange={(event) => setFiltroPrecio(event.target.value)}>
+                    <option >Ordenar por precio</option>
                     <option value="menorPrecio">Menor precio</option>
                     <option value="mayorPrecio">Mayor precio</option>
                 </select>

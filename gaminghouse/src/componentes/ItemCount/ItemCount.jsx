@@ -5,7 +5,12 @@ export const ItemCount = ({ initial = 1, stock, min = 1, onAdd }) => {
     const { contador, increment, decrement } = useCount(1, stock, initial)
 
     const handleOnAdd = () => {
-        onAdd(contador)
+
+        if(stock<1){
+
+            console.log("no hay stock")
+        } else {
+        onAdd(contador)}
     }
     return (
         <div className='div_itemcount'>

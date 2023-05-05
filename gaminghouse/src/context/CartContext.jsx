@@ -1,3 +1,4 @@
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
 import { createContext, useContext, useState } from "react";
 
 
@@ -19,14 +20,15 @@ export const CartContextProvider = ({ children }) => {
 
             setCartList([...cartList, newProduct])
         }
-        else {
+
+        else  {
             cartList[indice].cantidad += newProduct.cantidad
             setCartList([...cartList])
         }
     }
 
     const vaciarCarrito = () => {
-
+        
         setCartList([])
     }
 
@@ -41,9 +43,19 @@ export const CartContextProvider = ({ children }) => {
 
     }
 
-    const eliminarProducto = (pid) => {
+    const eliminarProducto = (pid,pcantidad) => {
         setCartList(cartList.filter(producto => producto.id !== pid))
+
+    const productoActual=+ pcantidad
+  
+    const db =getFirestore()
+    
+    const productDoc=doc(db,"productos",pid)
+    updateDoc(productDoc,{stock:productoActual})
+
+
     }
+
 
 
     return (

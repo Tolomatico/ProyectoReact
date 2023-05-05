@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useCartContext } from "../../context/CartContext"
 import { ItemCount } from "../ItemCount/ItemCount"
 import { Link } from "react-router-dom"
+import { doc, getFirestore, updateDoc } from "firebase/firestore"
 
 
 
@@ -10,11 +11,20 @@ export const ItemDetalle = ({ producto }) => {
   const [conCantidad, setConCantidad] = useState(false)
   const { agregarAlCart } = useCartContext()
 
+
   const onAdd = (cantidad) => {
-    agregarAlCart({ ...producto, cantidad })
+    
+   const productoActual= producto.stock - cantidad
+    agregarAlCart({ ...producto, cantidad})
+    const db =getFirestore()
+    
+    const productDoc=doc(db,"productos",producto.id)
+    updateDoc(productDoc,{stock:productoActual})
+
     setConCantidad(true)
   }
 
+ 
   return (
 
     <div className="div_detail ">

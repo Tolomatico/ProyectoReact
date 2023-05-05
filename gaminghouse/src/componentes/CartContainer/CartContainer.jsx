@@ -15,6 +15,19 @@ export const CartContainer = () => {
     console.log(formData)
 
     const hanndleVaciarCarrito = () => {
+
+        for (let i = 0; i < cartList.length; i++) {
+
+            const productoActual =  cartList[i].cantidad
+
+            const db = getFirestore()
+
+            const productDoc = doc(db, "productos", cartList[i].id)
+            updateDoc(productDoc, { stock: productoActual })
+
+
+        }
+
         vaciarCarrito()
 
     }
@@ -77,14 +90,14 @@ export const CartContainer = () => {
 
 
     const handleOnChangeEmail = (event) => {
-        
+
         setFormData({
             ...formData,
             [event.target.name]: [event.target.value],
 
         })
     }
-  
+
 
 
 
@@ -112,7 +125,7 @@ export const CartContainer = () => {
                         </div>
                         <div className="div_btn">
 
-                            <button className="btn btn-danger" onClick={() => eliminarProducto(producto.id)}>Elimar del carrito</button>
+                            <button className="btn btn-danger" onClick={() => eliminarProducto(producto.id, producto.cantidad)}>Elimar del carrito</button>
                         </div>
                     </div>
 
@@ -126,7 +139,7 @@ export const CartContainer = () => {
 
                     {cartList.length !== 0 ?
                         <div>
-                            <h3>Precio total: {totalCarrito()}</h3>
+                            <h3>Precio total: ${totalCarrito()}</h3>
                             <button onClick={hanndleVaciarCarrito}>Vaciar carrito</button>
 
                             <form onSubmit={hanndleEnviarOrden}>

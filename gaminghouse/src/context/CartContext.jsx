@@ -46,7 +46,7 @@ export const CartContextProvider = ({ children }) => {
     const eliminarProducto = (pid,pcantidad) => {
         setCartList(cartList.filter(producto => producto.id !== pid))
 
-    const productoActual=+ pcantidad
+    const productoActual=+ pcantidad 
   
     const db =getFirestore()
     

@@ -20,13 +20,6 @@ export const ItemDetailContainer = () => {
       .then(resp => setProducto({ id: resp.id, ...resp.data() }))
   }, [])
 
-  //  useEffect(()=>{
-
-  //  mockFeth(productoid)
-  //    .then(resp=>setProducto(resp))
-  //   .catch((err)=>console.log(err))
-
-  //  },[])
 
   return (
 

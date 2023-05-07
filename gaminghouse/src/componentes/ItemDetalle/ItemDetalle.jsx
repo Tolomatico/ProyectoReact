@@ -9,22 +9,19 @@ import { doc, getFirestore, updateDoc } from "firebase/firestore"
 export const ItemDetalle = ({ producto }) => {
 
   const [conCantidad, setConCantidad] = useState(false)
-  const { agregarAlCart } = useCartContext()
+  const { agregarAlCart} = useCartContext()
+
 
 
   const onAdd = (cantidad) => {
-    
-   const productoActual= producto.stock - cantidad
-    agregarAlCart({ ...producto, cantidad})
-    const db =getFirestore()
-    
-    const productDoc=doc(db,"productos",producto.id)
-    updateDoc(productDoc,{stock:productoActual})
 
-    setConCantidad(true)
+  
+      agregarAlCart({ ...producto, cantidad });
+      setConCantidad(true);
+
   }
 
- 
+
   return (
 
     <div className="div_detail ">

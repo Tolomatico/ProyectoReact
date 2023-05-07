@@ -1,4 +1,3 @@
-import { doc, getFirestore, updateDoc } from "firebase/firestore";
 import { createContext, useContext, useState } from "react";
 
 
@@ -10,7 +9,7 @@ export const useCartContext = () => useContext(CartContext)
 export const CartContextProvider = ({ children }) => {
 
     const [cartList, setCartList] = useState([])
-
+    
     const agregarAlCart = (newProduct) => {
 
         const indice = cartList.findIndex((producto => producto.id === newProduct.id))
@@ -19,6 +18,12 @@ export const CartContextProvider = ({ children }) => {
 
 
             setCartList([...cartList, newProduct])
+        }
+
+         else if (cartList[indice].cantidad + newProduct.cantidad > newProduct.stock ){
+
+             console.log("No hay stock suficiente")
+
         }
 
         else  {
@@ -43,17 +48,10 @@ export const CartContextProvider = ({ children }) => {
 
     }
 
-    const eliminarProducto = (pid,pcantidad) => {
+    const eliminarProducto = (pid) => {
         setCartList(cartList.filter(producto => producto.id !== pid))
-
-    const productoActual=+ pcantidad 
-  
-    const db =getFirestore()
+        
     
-    const productDoc=doc(db,"productos",pid)
-    updateDoc(productDoc,{stock:productoActual})
-
-
     }
 
 
@@ -67,7 +65,9 @@ export const CartContextProvider = ({ children }) => {
                 vaciarCarrito,
                 totalCarrito,
                 cantidadEnCarrito,
-                eliminarProducto
+                eliminarProducto,
+                
+               
             }}>
 
             {children}

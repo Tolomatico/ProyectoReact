@@ -17,32 +17,13 @@ export const CartContainer = () => {
 
     const hanndleVaciarCarrito = () => {
 
-        for (let i = 0; i < cartList.length; i++) {
-
-            const productoActual = cartList[i].cantidad
-
-            const db = getFirestore()
-
-
-            const productDoc = doc(db, "productos", cartList[i].id)
-            getDoc(productDoc)
-                .then((productGetDoc) => {
-                    const stockActual = productGetDoc.data().stock
-                    const nuevoStock = productoActual + stockActual
-                    updateDoc(productDoc, { stock: nuevoStock })
-                })
-                .catch((error) => {
-                    console.error("Error obteniendo documento:", error)
-                })
-
-                .finally(() => vaciarCarrito())
-
+   vaciarCarrito()
 
         }
 
       
 
-    }
+    
 
 const hanndleEnviarOrden = (event) => {
 
@@ -57,11 +38,30 @@ const hanndleEnviarOrden = (event) => {
     const db = getFirestore()
     const queryCollection = collection(db, "orders")
 
+     for (let i = 0; i < cartList.length; i++) {
+
+            const productoOrdenado = cartList[i].cantidad
+    
+            const productDoc = doc(db, "productos", cartList[i].id)
+            getDoc(productDoc)
+                .then((productGetDoc) => {
+                    const stockActual = productGetDoc.data().stock
+                    const nuevoStock = stockActual - productoOrdenado 
+                    updateDoc(productDoc, { stock: nuevoStock })
+                })
+                .catch((err) => {
+                    console.error(err)
+                })}
+
+   
+
 
     addDoc(queryCollection, order)
         .then(resp => setOrderId(resp.id))
         .catch(err => console.log(err))
         .finally(() => console.log("finalizar compra"))
+
+       
 
     vaciarCarrito()
 

@@ -6,7 +6,7 @@ import { ItemCount } from "../ItemCount/ItemCount"
 
 
 
-export const ItemDetalle = ({ producto }) => {
+export const ItemDetail = ({ producto }) => {
 
   const [conCantidad, setConCantidad] = useState(false)
   const { agregarAlCart, cartList } = useCartContext()

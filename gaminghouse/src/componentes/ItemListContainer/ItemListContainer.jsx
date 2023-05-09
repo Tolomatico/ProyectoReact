@@ -16,6 +16,7 @@ const ItemListContainer = () => {
 
     useEffect(() => {
 
+
         const db = getFirestore()
         const queryCollection = collection(db, "productos")
 
@@ -34,7 +35,9 @@ const ItemListContainer = () => {
                 .catch(err => console.log(err))
                 .finally(() => setIsLoading(false))
         }
-    }, [categoriaid])
+    },[categoriaid])
+        
+
 
 
     const handleFiltroPrecio = () => {

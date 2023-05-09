@@ -9,15 +9,25 @@ import { doc, getFirestore, updateDoc } from "firebase/firestore"
 export const ItemDetalle = ({ producto }) => {
 
   const [conCantidad, setConCantidad] = useState(false)
-  const { agregarAlCart} = useCartContext()
+  const { agregarAlCart, cartList } = useCartContext()
+  const [btnOff,setBtnOff]=useState(false)
 
 
 
   const onAdd = (cantidad) => {
 
+    const indice = cartList.findIndex(prod => prod.id === producto.id)
+
   
-      agregarAlCart({ ...producto, cantidad });
+    if (indice === -1) {
+
+      console.log(indice)
+      agregarAlCart({ ...producto, cantidad })
       setConCantidad(true);
+    } else {
+
+      setBtnOff(true)
+    }
 
   }
 
@@ -39,8 +49,9 @@ export const ItemDetalle = ({ producto }) => {
             <Link to="/"> <button>Seguir comprando</button> </Link>
             <Link to="/cart"> <button>Ir al carrito</button></Link>
           </div>
-          :
-          <ItemCount initial={1} stock={producto.stock} onAdd={onAdd} />
+          : 
+            
+          <ItemCount initial={1} stock={producto.stock} onAdd={onAdd} btn={btnOff}/>
         }
       </div>
     </div>

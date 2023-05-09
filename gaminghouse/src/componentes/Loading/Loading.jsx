@@ -3,6 +3,6 @@ import React, { useEffect } from 'react'
 export const Loading = () => {
 
   return (
-    <h2>Cargando productos...</h2>
+    <h2 className='loader'>Cargando productos...</h2>
   )
 }

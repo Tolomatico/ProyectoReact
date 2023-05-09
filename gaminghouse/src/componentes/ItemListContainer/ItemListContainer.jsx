@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
-import { ItemList } from "../ItemList/ItemList"
+import { collection, getFirestore, getDocs, query, where, } from "firebase/firestore"
 import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+
+import { ItemList } from "../ItemList/ItemList"
 import { Loading } from "../Loading/Loading"
-import { collection, getDoc, getFirestore, doc, getDocs, query, where, } from "firebase/firestore"
 import { Filter } from "../Filter/Filter"
+
 
 const ItemListContainer = () => {
     const [productos, setProductos] = useState([])
@@ -20,23 +22,18 @@ const ItemListContainer = () => {
         const db = getFirestore()
         const queryCollection = collection(db, "productos")
 
-        if (categoriaid) {
 
-            const queryFilter = query(queryCollection, where("categoria", "==", categoriaid))
+
+        const queryFilter = categoriaid ? query(queryCollection, where("categoria", "==", categoriaid)) : queryCollection
             getDocs(queryFilter)
                 .then(resp => setProductos(resp.docs.map(producto => ({ id: producto.id, ...producto.data() }))))
                 .catch(err => console.log(err))
                 .finally(() => setIsLoading(false))
-        }
-        else {
 
-            getDocs(queryCollection)
-                .then(resp => setProductos(resp.docs.map(producto => ({ id: producto.id, ...producto.data() }))))
-                .catch(err => console.log(err))
-                .finally(() => setIsLoading(false))
-        }
-    },[categoriaid])
-        
+
+
+    }, [categoriaid])
+
 
 
 
@@ -65,13 +62,13 @@ const ItemListContainer = () => {
                     <input className="input_buscador" type="text" value={filterState} onChange={filterOnChange} placeholder="Nombre del producto..." />
 
                     <select className="select_filtro" value={filtroPrecio} onChange={(event) => setFiltroPrecio(event.target.value)}>
-                    <option >Ordenar por precio</option>
-                    <option value="menorPrecio">Menor precio</option>
-                    <option value="mayorPrecio">Mayor precio</option>
-                </select>
+                        <option >Ordenar por precio</option>
+                        <option value="menorPrecio">Menor precio</option>
+                        <option value="mayorPrecio">Mayor precio</option>
+                    </select>
                 </div>
 
-               
+
 
                 <div className="listcard_container">
                     <ItemList

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
+
 import CartWidget from "../CartWidget/CartWidget"
 
 
 function NavBar() {
 
+    
     return (
 
         

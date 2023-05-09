@@ -1,8 +1,8 @@
+import { Link } from "react-router-dom"
 import { useState } from "react"
+
 import { useCartContext } from "../../context/CartContext"
 import { ItemCount } from "../ItemCount/ItemCount"
-import { Link } from "react-router-dom"
-import { doc, getFirestore, updateDoc } from "firebase/firestore"
 
 
 
@@ -21,7 +21,7 @@ export const ItemDetalle = ({ producto }) => {
   
     if (indice === -1) {
 
-      console.log(indice)
+     
       agregarAlCart({ ...producto, cantidad })
       setConCantidad(true);
     } else {

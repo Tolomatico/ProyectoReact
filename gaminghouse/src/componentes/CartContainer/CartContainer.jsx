@@ -10,9 +10,6 @@ export const CartContainer = () => {
 
     const [formData, setFormData] = useState({ nombre: "", telefono: "", email: "" })
 
-    console.log(cartList)
-
-    console.log(formData)
 
 
     const hanndleVaciarCarrito = () => {
@@ -59,7 +56,7 @@ const hanndleEnviarOrden = (event) => {
     addDoc(queryCollection, order)
         .then(resp => setOrderId(resp.id))
         .catch(err => console.log(err))
-        .finally(() => console.log("finalizar compra"))
+        
 
        
 
@@ -87,7 +84,7 @@ const handleOnChangeTelefono = (event) => {
 
     if (isNaN(event.target.value)) {
 
-        console.log(formData)
+        
     } else {
 
         setFormData({

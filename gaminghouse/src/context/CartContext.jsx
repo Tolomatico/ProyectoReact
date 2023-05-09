@@ -22,7 +22,7 @@ export const CartContextProvider = ({ children }) => {
 
          else if (cartList[indice].cantidad + newProduct.cantidad > newProduct.stock ){
 
-             console.log("No hay stock suficiente")
+          
 
         }
 

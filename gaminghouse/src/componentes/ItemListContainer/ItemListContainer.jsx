@@ -7,11 +7,12 @@ import { Loading } from "../Loading/Loading"
 import { Filter } from "../Filter/Filter"
 
 
+
 const ItemListContainer = () => {
-    const [productos, setProductos] = useState([])
+    const [products, setProducts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const { categoriaid } = useParams()
-    const [filtroPrecio, setFiltroPrecio] = useState("")
+    const { categoryId } = useParams()
+    const [filterPrice, setFilterPrice] = useState("")
 
 
 
@@ -24,34 +25,34 @@ const ItemListContainer = () => {
 
 
 
-        const queryFilter = categoriaid ? query(queryCollection, where("categoria", "==", categoriaid)) : queryCollection
-            getDocs(queryFilter)
-                .then(resp => setProductos(resp.docs.map(producto => ({ id: producto.id, ...producto.data() }))))
-                .catch(err => console.log(err))
-                .finally(() => setIsLoading(false))
+        const queryFilter = categoryId ? query(queryCollection, where("categoria", "==", categoryId)) : queryCollection
+        getDocs(queryFilter)
+            .then(resp => setProducts(resp.docs.map(product => ({ id: product.id, ...product.data() }))))
+            .catch(err => console.log(err))
+            .finally(() => setIsLoading(false))
+
+
+    }, [categoryId])
 
 
 
-    }, [categoriaid])
 
 
+    const handleFilterPrice = () => {
 
+        if (filterPrice === "lowerPrice") {
+            return [...products].sort((a, b) => a.precio - b.precio)
 
-    const handleFiltroPrecio = () => {
-
-        if (filtroPrecio === "menorPrecio") {
-            return [...productos].sort((a, b) => a.precio - b.precio)
-
-        } else if (filtroPrecio === "mayorPrecio") {
-            return [...productos].sort((a, b) => b.precio - a.precio)
+        } else if (filterPrice === "higherPrice") {
+            return [...products].sort((a, b) => b.precio - a.precio)
 
         } else {
-            return productos
+            return products
         }
     }
 
 
-    const handleProductosFiltrados = ({ filterState, filterOnChange }) => {
+    const filterProducts = ({ filterState, filterOnChange }) => {
 
         return (
 
@@ -59,12 +60,12 @@ const ItemListContainer = () => {
                 <div className="div_buscador">
                     <h3 className="buscador">Buscar producto</h3>
 
-                    <input className="input_buscador" type="text" value={filterState} onChange={filterOnChange} placeholder="Nombre del producto..." />
+                    <input className="input_buscador" type="text" value={filterState} onChange={filterOnChange} placeholder="Nombre del product..." />
 
-                    <select className="select_filtro" value={filtroPrecio} onChange={(event) => setFiltroPrecio(event.target.value)}>
+                    <select className="select_filtro" value={filterPrice} onChange={(event) => setFilterPrice(event.target.value)}>
                         <option >Ordenar por precio</option>
-                        <option value="menorPrecio">Menor precio</option>
-                        <option value="mayorPrecio">Mayor precio</option>
+                        <option value="lowerPrice">Menor precio</option>
+                        <option value="higherPrice">Mayor precio</option>
                     </select>
                 </div>
 
@@ -73,7 +74,7 @@ const ItemListContainer = () => {
                 <div className="listcard_container">
                     <ItemList
 
-                        productos={filterState === "" ? handleFiltroPrecio() : handleFiltroPrecio().filter(producto => producto.nombre.toLowerCase().includes(filterState))
+                        products={filterState === "" ? handleFilterPrice() : handleFilterPrice().filter(product => product.nombre.toLowerCase().includes(filterState))
 
                         }
                     />
@@ -96,7 +97,7 @@ const ItemListContainer = () => {
                 <Filter className="listcard_container">
 
 
-                    {handleProductosFiltrados}
+                    {filterProducts}
 
                 </Filter>
             }

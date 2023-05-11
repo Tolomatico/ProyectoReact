@@ -2,187 +2,200 @@ import { useState } from "react"
 import { useCartContext } from "../../context/CartContext"
 import { addDoc, collection, doc, getDoc, getFirestore, updateDoc } from "firebase/firestore"
 
+
 export const CartContainer = () => {
 
-    const { cartList, vaciarCarrito, totalCarrito, eliminarProducto } = useCartContext()
+    const { cartList, clearCart, totalCart, clearProduct } = useCartContext()
 
     const [orderId, setOrderId] = useState(null)
 
-    const [formData, setFormData] = useState({ nombre: "", telefono: "", email: "" })
+    const [formData, setFormData] = useState({ name: "", phone: "", email: "" })
+    const [email, setEmail] = useState("")
+    const [confirmEmail, setConfirmEmail] = useState("")
+    const [error, setError] = useState("")
+    const [checkout,setCheckout] =useState(false)
 
 
 
-    const hanndleVaciarCarrito = () => {
-
-   vaciarCarrito()
-
-        }
-
-      
-
-    
-
-const hanndleEnviarOrden = (event) => {
-
-    event.preventDefault()
-    const precio = totalCarrito()
-    const order = {
-        buyer: formData,
-        productos: cartList.map(({ id, nombre, precio, cantidad }) => ({ id, nombre, precio, cantidad })),
-        total: { precio }
-    }
-
-    const db = getFirestore()
-    const queryCollection = collection(db, "orders")
-
-     for (let i = 0; i < cartList.length; i++) {
-
-            const productoOrdenado = cartList[i].cantidad
-    
-            const productDoc = doc(db, "productos", cartList[i].id)
-            getDoc(productDoc)
-                .then((productGetDoc) => {
-                    const stockActual = productGetDoc.data().stock
-                    const nuevoStock = stockActual - productoOrdenado 
-                    updateDoc(productDoc, { stock: nuevoStock })
-                })
-                .catch((err) => {
-                    console.error(err)
-                })}
-
-   
-
-
-    addDoc(queryCollection, order)
-        .then(resp => setOrderId(resp.id))
-        .catch(err => console.log(err))
-        
-
-       
-
-    vaciarCarrito()
-
-    /// updates
-    // const queryDoc =doc(db,"productos","7W8c1cQs7SZVEap2joy4")
-    // updateDoc(queryDoc,{
-    //     stock: 99,
-    // })
-}
-
-const handleOnChangeNombre = (event) => {
-
-    setFormData({
-        ...formData,
-        [event.target.name]: [event.target.value]
-    })
-
-
-
-}
-
-const handleOnChangeTelefono = (event) => {
-
-    if (isNaN(event.target.value)) {
-
-        
-    } else {
+    const handleOnChangeNombre = (event) => {
 
         setFormData({
             ...formData,
-            [event.target.name]: [event.target.value],
-
+            [event.target.name]: event.target.value
         })
+
+
     }
-}
+
+    const handleOnChangePhone = (event) => {
+
+        if (isNaN(event.target.value)) {
+        } else {
+            setFormData({
+                ...formData,
+                [event.target.name]: event.target.value,
+            })
+        }
+    }
+
+    const handleSubmit = (event) => {
+
+        event.preventDefault()
+
+        if (email === confirmEmail) {
+
+            setFormData({
+                ...formData, email
+            })
+            
+            setError("")
+
+            setCheckout(true)
+           
+        }else{
+
+        
+        setError("Los mails no coinciden")}
+
+    }
+
+
+    console.log(formData)
 
 
 
-
-const handleOnChangeEmail = (event) => {
-
-    setFormData({
-        ...formData,
-        [event.target.name]: [event.target.value],
-
-    })
-}
+    const handleClearCart = () => {
+        clearCart()
+    }
 
 
+    const handleSendOrder = (event) => {
+
+        event.preventDefault()
+
+        const price = totalCart()
+        const order = {
+            buyer: formData,
+            products: cartList.map(({ id, nombre, precio, quantity }) => ({ id, nombre, precio, quantity })),
+            total: { price }
+        }
+
+        const db = getFirestore()
+        const queryCollection = collection(db, "orders")
+
+        for (let i = 0; i < cartList.length; i++) {
+
+            const orderedProducts = cartList[i].quantity
+
+            const productDoc = doc(db, "productos", cartList[i].id)
+            getDoc(productDoc)
+                .then((productGetDoc) => {
+                    const actualStock = productGetDoc.data().stock
+                    const newStock = actualStock - orderedProducts
+                    updateDoc(productDoc, { stock: newStock })
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
+        }
+
+        addDoc(queryCollection, order)
+            .then(resp => setOrderId(resp.id))
+            .catch(err => console.log(err))
+        clearCart()
 
 
-return (
-    <div className="div_cart"> {orderId !== null ?
+    }
 
-        <p>"Muchas gracias por su compra", el id de su compra es: {orderId}</p>
+    return (
+        <div className="div_cart"> {orderId !== null ?
 
-        :
+            <p>"Muchas gracias por su compra", el id de su compra es: {orderId}</p>
 
-        <div>
-
-            <h1>  Tú carrito </h1>
-
-            {cartList.map((producto) => (
-                <div key={producto.id} className="card_carrito" >
-
-                    <div className="card_carrito" >
-                        <img src={producto.imagen} alt="imagen" className="imagen card_img" />
-                        <div className="div_info" >
-                            <h3>Producto:{producto.nombre}</h3>
-                            <p>Precio:${producto.precio}</p>
-                            <p>Unidades:{producto.cantidad}</p>
-                        </div>
-                    </div>
-                    <div className="div_btn">
-
-                        <button className="btn btn-danger" onClick={() => eliminarProducto(producto.id, producto.cantidad)}>Elimar del carrito</button>
-                    </div>
-                </div>
-
-
-
-
-            ))}
-
+            :
 
             <div>
 
-                {cartList.length !== 0 ?
-                    <div>
-                        <h3>Precio total: ${totalCarrito()}</h3>
-                        <button onClick={hanndleVaciarCarrito}>Vaciar carrito</button>
+                <h1>  Tú carrito </h1>
 
-                        <form onSubmit={hanndleEnviarOrden}>
-                            <input
-                                type="text"
-                                name="nombre"
-                                placeholder="Ingrese su nombre"
-                                onChange={handleOnChangeNombre}
-                                value={formData.nombre}
-                            />
-                            <input
-                                type="text"
-                                name="telefono"
-                                placeholder="Ingrese su telefono"
-                                onChange={handleOnChangeTelefono}
-                                value={formData.telefono}
-                            />
-                            <input
-                                type="text"
-                                name="email"
-                                placeholder="Ingrese su email"
-                                onChange={handleOnChangeEmail}
-                                value={formData.email}
-                            />
+                {cartList.map((product) => (
+                    <div key={product.id} className="card_carrito" >
 
-                            <button >Finalizar compra</button>
-                        </form>
+                        <div className="card_carrito" >
+                            <img src={product.imagen} alt="imagen" className="imagen card_img" />
+                            <div className="div_info" >
+                                <h3>Producto:{product.name}</h3>
+                                <p>Precio:${product.price}</p>
+                                <p>Unidades:{product.quantity}</p>
+                            </div>
+                        </div>
+                        <div className="div_btn">
+
+                            <button className="btn btn-danger" onClick={() => clearProduct(product.id, product.quantity)}>Elimar del carrito</button>
+                        </div>
                     </div>
 
-                    : <p>No tiene ningún producto en el carrito</p>
-                }
-            </div>
 
-        </div>}
-    </div>
-)
+
+
+                ))}
+
+
+                <div>
+
+                    {cartList.length !== 0 ?
+                        <div>
+                            <h3>Precio total: ${totalCart()}</h3>
+                            <button onClick={handleClearCart}>Vaciar carrito</button>
+
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    placeholder="Ingrese su nombre"
+                                    onChange={handleOnChangeNombre}
+                                    value={formData.name}
+                                />
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    placeholder="Ingrese su telefono"
+                                    onChange={handleOnChangePhone}
+                                    value={formData.phone}
+                                />
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Ingrese su email"
+                                    onChange={(event) => setEmail(event.target.value)}
+                                    value={email}
+                                />
+                                <input
+                                    type="email"
+                                    name="confirmEmail"
+                                    placeholder="Confirme su email"
+                                    onChange={(event) => setConfirmEmail(event.target.value)}
+                                    value={confirmEmail}
+                                />
+
+                                <p className="error">{error}</p>
+
+                                {checkout ?  <button onClick={handleSendOrder} > Finalizar compra </button> :   <button >Confirmar Datos</button> } 
+                            </form>
+
+                           
+
+                           
+                        </div>
+
+                        : <p>No tiene ningún product en el carrito</p>
+                    }
+                </div>
+
+            </div>}
+        </div>
+
+
+    )
 }

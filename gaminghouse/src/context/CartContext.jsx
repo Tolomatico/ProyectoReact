@@ -10,46 +10,46 @@ export const CartContextProvider = ({ children }) => {
 
     const [cartList, setCartList] = useState([])
     
-    const agregarAlCart = (newProduct) => {
+    const addToCart = (newProduct) => {
 
-        const indice = cartList.findIndex((producto => producto.id === newProduct.id))
+        const index = cartList.findIndex((product => product.id === newProduct.id))
 
-        if (indice == -1) {
+        if (index == -1) {
 
 
             setCartList([...cartList, newProduct])
         }
 
-         else if (cartList[indice].cantidad + newProduct.cantidad > newProduct.stock ){
+         else if (cartList[index].quantity + newProduct.quantity > newProduct.stock ){
 
           
 
         }
 
         else  {
-            cartList[indice].cantidad += newProduct.cantidad
+            cartList[index].quantity += newProduct.quantity
             setCartList([...cartList])
         }
     }
 
-    const vaciarCarrito = () => {
+    const clearCart = () => {
         
         setCartList([])
     }
 
-    const totalCarrito = () => {
-        return cartList.reduce((precioTotal, producto) =>
-            precioTotal = precioTotal + (producto.precio * producto.cantidad), 0)
+    const totalCart = () => {
+        return cartList.reduce((totalPrice, product) =>
+            totalPrice = totalPrice + (product.precio * product.quantity), 0)
     }
 
-    const cantidadEnCarrito = () => {
-        return cartList.reduce((cantidadTotal, cantidadProducto) =>
-            cantidadTotal = cantidadTotal + cantidadProducto.cantidad, 0)
+    const quantityInTheCart = () => {
+        return cartList.reduce((totalQuantity, QuantityOfProduct) =>
+            totalQuantity = totalQuantity + QuantityOfProduct.quantity, 0)
 
     }
 
-    const eliminarProducto = (pid) => {
-        setCartList(cartList.filter(producto => producto.id !== pid))
+    const clearProduct = (pid) => {
+        setCartList(cartList.filter(product => product.id !== pid))
         
     
     }
@@ -61,11 +61,11 @@ export const CartContextProvider = ({ children }) => {
         <CartContext.Provider
             value={{
                 cartList,
-                agregarAlCart,
-                vaciarCarrito,
-                totalCarrito,
-                cantidadEnCarrito,
-                eliminarProducto,
+                addToCart,
+                clearCart,
+                totalCart,
+                quantityInTheCart,
+                clearProduct,
                 
                
             }}>

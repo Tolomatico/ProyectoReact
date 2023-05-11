@@ -9,24 +9,24 @@ import { ItemDetail } from '../ItemDetail/ItemDetail'
 
 export const ItemDetailContainer = () => {
 
-  const [producto, setProducto] = useState({})
+  const [product, setProduct] = useState({})
 
-  const { productoid } = useParams()
+  const { productId } = useParams()
 
   useEffect(() => {
 
     const db = getFirestore()
 
-    const queryDoc = doc(db, "productos",productoid)
+    const queryDoc = doc(db, "productos",productId)
 
     getDoc(queryDoc)
-      .then(resp => setProducto({ id: resp.id, ...resp.data() }))
+      .then(resp => setProduct({ id: resp.id, ...resp.data() }))
   }, [])
 
 
   return (
 
-    <ItemDetail producto={producto} />
+    <ItemDetail product={product} />
   )
 }
 

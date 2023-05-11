@@ -3,7 +3,7 @@ import { useCartContext } from "../../context/CartContext"
 
 function CartWidget() {
 
- const {cantidadEnCarrito} = useCartContext()
+ const {quantityInTheCart} = useCartContext()
     return (
         <div>
             
@@ -13,7 +13,7 @@ function CartWidget() {
                 
                 
 
-                <span style={{ fontSize: `30px` }}>{cantidadEnCarrito()}</span>
+                <span style={{ fontSize: `30px` }}>{quantityInTheCart()}</span>
 
                 
 

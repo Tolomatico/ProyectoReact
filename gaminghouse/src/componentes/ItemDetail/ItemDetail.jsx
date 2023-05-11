@@ -6,24 +6,24 @@ import { ItemCount } from "../ItemCount/ItemCount"
 
 
 
-export const ItemDetail = ({ producto }) => {
+export const ItemDetail = ({ product }) => {
 
-  const [conCantidad, setConCantidad] = useState(false)
-  const { agregarAlCart, cartList } = useCartContext()
+  const [emptyCart, setEmptyCart] = useState(false)
+  const { addToCart, cartList } = useCartContext()
   const [btnOff,setBtnOff]=useState(false)
 
 
 
-  const onAdd = (cantidad) => {
+  const onAdd = (quantity) => {
 
-    const indice = cartList.findIndex(prod => prod.id === producto.id)
+    const indice = cartList.findIndex(prod => prod.id === product.id)
 
   
     if (indice === -1) {
 
      
-      agregarAlCart({ ...producto, cantidad })
-      setConCantidad(true);
+      addToCart({ ...product, quantity })
+      setEmptyCart(true);
     } else {
 
       setBtnOff(true)
@@ -37,21 +37,21 @@ export const ItemDetail = ({ producto }) => {
     <div className="div_detail ">
 
       <div className="card_carrito" >
-        <img src={producto.imagen} alt="imagen" className="imagen card_img" />
+        <img src={product.imagen} alt="imagen" className="imagen card_img" />
         <div className="div_info" >
-          <h3>Producto:{producto.nombre}</h3>
-          <p>Precio:${producto.precio}</p>
-          <p>Unidades:{producto.stock}</p>
+          <h3>Producto:{product.nombre}</h3>
+          <p>Precio:${product.precio}</p>
+          <p>Unidades:{product.stock}</p>
         </div>
-        {conCantidad ?
+        {emptyCart ?
 
           <div className='div_itemcount'>
             <Link to="/"> <button>Seguir comprando</button> </Link>
-            <Link to="/cart"> <button>Ir al carrito</button></Link>
+            <Link to="/carrito"> <button>Ir al carrito</button></Link>
           </div>
           : 
             
-          <ItemCount initial={1} stock={producto.stock} onAdd={onAdd} btn={btnOff}/>
+          <ItemCount initial={1} stock={product.stock} onAdd={onAdd} btn={btnOff}/>
         }
       </div>
     </div>

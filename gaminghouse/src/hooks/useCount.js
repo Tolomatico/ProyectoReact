@@ -5,24 +5,24 @@ export const useCount = (initial = 0, max = 5, min = 1) => {
     if (initial < min || initial > max) initial = min
 
   
-    const [contador, setContador] = useState(initial)
+    const [count, setCount] = useState(initial)
 
     const increment = () => {
 
-        if (contador < max)
-            (setContador(contador + 1))
+        if (count < max)
+            (setCount(count + 1))
     }
 
     const decrement = () => {
 
-        if (contador > min)
-            setContador(contador - 1)
+        if (count > min)
+            setCount(count - 1)
     }
 
     
 
 
-    return { contador, increment, decrement}
+    return { count, increment, decrement}
 
 
 }

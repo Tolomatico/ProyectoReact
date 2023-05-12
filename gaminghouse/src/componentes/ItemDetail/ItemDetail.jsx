@@ -10,7 +10,7 @@ export const ItemDetail = ({ product }) => {
 
   const [emptyCart, setEmptyCart] = useState(false)
   const { addToCart, cartList } = useCartContext()
-  const [btnOff,setBtnOff]=useState(false)
+  const [btnOff, setBtnOff] = useState(false)
 
 
 
@@ -18,10 +18,10 @@ export const ItemDetail = ({ product }) => {
 
     const indice = cartList.findIndex(prod => prod.id === product.id)
 
-  
+
     if (indice === -1) {
 
-     
+
       addToCart({ ...product, quantity })
       setEmptyCart(true);
     } else {
@@ -39,7 +39,7 @@ export const ItemDetail = ({ product }) => {
       <div className="card_carrito" >
         <img src={product.imagen} alt="imagen" className="imagen card_img" />
         <div className="div_info" >
-          <h3>Producto:{product.nombre}</h3>
+          <h3>{product.nombre}</h3>
           <p>Precio:${product.precio}</p>
           <p>Unidades:{product.stock}</p>
         </div>
@@ -49,9 +49,9 @@ export const ItemDetail = ({ product }) => {
             <Link to="/"> <button>Seguir comprando</button> </Link>
             <Link to="/carrito"> <button>Ir al carrito</button></Link>
           </div>
-          : 
-            
-          <ItemCount initial={1} stock={product.stock} onAdd={onAdd} btn={btnOff}/>
+          :
+
+          <ItemCount initial={1} stock={product.stock} onAdd={onAdd} btn={btnOff} />
         }
       </div>
     </div>

@@ -60,7 +60,7 @@ export const CartContainer = () => {
     }
 
 
-    console.log(formData)
+
 
 
 
@@ -124,7 +124,7 @@ export const CartContainer = () => {
                         <div className="card_carrito" >
                             <img src={product.imagen} alt="imagen" className="imagen card_img" />
                             <div className="div_info" >
-                                <h3>Producto:{product.name}</h3>
+                                <h3>{product.nombre}</h3>
                                 <p>Precio:${product.precio}</p>
                                 <p>Unidades:{product.quantity}</p>
                             </div>

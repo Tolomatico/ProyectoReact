@@ -125,7 +125,7 @@ export const CartContainer = () => {
                             <img src={product.imagen} alt="imagen" className="imagen card_img" />
                             <div className="div_info" >
                                 <h3>Producto:{product.name}</h3>
-                                <p>Precio:${product.price}</p>
+                                <p>Precio:${product.precio}</p>
                                 <p>Unidades:{product.quantity}</p>
                             </div>
                         </div>

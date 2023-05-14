@@ -13,9 +13,9 @@ export const CartContainer = () => {
     const [email, setEmail] = useState("")
     const [confirmEmail, setConfirmEmail] = useState("")
     const [error, setError] = useState("")
-    const [checkout,setCheckout] =useState(false)
+    const [checkout, setCheckout] = useState(false)
 
-
+  
 
     const handleOnChangeNombre = (event) => {
 
@@ -30,6 +30,8 @@ export const CartContainer = () => {
     const handleOnChangePhone = (event) => {
 
         if (isNaN(event.target.value)) {
+
+            setError("Ingrese un número.")
         } else {
             setFormData({
                 ...formData,
@@ -47,17 +49,19 @@ export const CartContainer = () => {
             setFormData({
                 ...formData, email
             })
-            
+
             setError("")
+           setCheckout(true)
 
-            setCheckout(true)
-           
-        }else{
 
-        
-        setError("Los mails no coinciden")}
+        } else {
 
+            setError("Los mails no coinciden.")
+        }
     }
+
+
+
 
 
 
@@ -181,12 +185,12 @@ export const CartContainer = () => {
 
                                 <p className="error">{error}</p>
 
-                                {checkout ?  <button onClick={handleSendOrder} > Finalizar compra </button> :   <button >Confirmar Datos</button> } 
+                                {checkout ? <button onClick={handleSendOrder} > Finalizar compra </button> : <button >Confirmar Datos</button>}
                             </form>
 
-                           
 
-                           
+
+
                         </div>
 
                         : <p>No tiene ningún product en el carrito</p>
